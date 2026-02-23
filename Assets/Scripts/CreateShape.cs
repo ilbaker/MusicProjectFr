@@ -12,29 +12,25 @@ public class CreateShape : MonoBehaviour
     GameObject[] spheres;
     Vector3[] spheresInitialPositions;
     Color[] sphereColors;
-    public Texture2D shape;
-    float scale = 0.5f;
+    public Texture2D shape1;
+    public float scale = 0.5f;
+    int numSphere;
     // Start is called before the first frame update
     void Start()
     {
-        int numSphere = NumSolidPixels();
+        numSphere = NumSolidPixels(shape1);
+
         spheres = new GameObject[numSphere]; // how many spheres
         spheresInitialPositions = new Vector3[numSphere]; // initial positions of the spheres
         sphereColors = new Color[numSphere];
 
-        SetPositions();
+        SetPositions(shape1, spheresInitialPositions);
 
         // Let there be spheres..
         for (int i = 0; i < numSphere; i++)
         {
-            float r = 10f; // radius of the circle
-            // Draw primitive elements:
-            // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/GameObject.CreatePrimitive.html
             spheres[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            // Initial positions of the spheres. make it in circle with r radius.
-            // https://www.cuemath.com/geometry/unit-circle/
-            //spheresInitialPositions[i] = new Vector3(r * Mathf.Sin(i * 2 * Mathf.PI / numSphere), r * Mathf.Cos(i * 2 * Mathf.PI / numSphere), 10f);
-
+        
             // Initial positions on pixel grid
             spheres[i].transform.position = spheresInitialPositions[i];
 
@@ -48,7 +44,7 @@ public class CreateShape : MonoBehaviour
         }
     }
 
-    int NumSolidPixels()
+    int NumSolidPixels(Texture2D shape)
     {
         Color[] pixels = shape.GetPixels();
         int count = 0;
@@ -56,7 +52,7 @@ public class CreateShape : MonoBehaviour
         {
             if (pixels[i].a != 0)
             {
-                if (IsEdgePixel(pixels, i))
+                if (IsEdgePixel(shape, pixels, i))
                 {
                     count++;
                 }
@@ -65,7 +61,8 @@ public class CreateShape : MonoBehaviour
         return count;
     }
 
-    void SetPositions()
+    // Sets the positions of the given array to the shape outline
+    void SetPositions(Texture2D shape, Vector3[] positions)
     {
         Color[] pixels = shape.GetPixels();
 
@@ -76,22 +73,23 @@ public class CreateShape : MonoBehaviour
         {
             if (pixels[i].a != 0)
             {
-                if (IsEdgePixel(pixels, i))
+                if (IsEdgePixel(shape, pixels, i) /*&& ((i % interval) == 0)*/ && sphereCount < numSphere)
                 {
 
                     float x = (i % width) - (width / 2);
                     float y = (i / width) - (shape.height / 2);
-                    spheresInitialPositions[sphereCount] = new Vector3(x * scale, y * scale, 100f);
-                    sphereColors[sphereCount] = pixels[i];
+                    positions[sphereCount] = new Vector3(x * scale, y * scale, 100f);
+                    //sphereColors[sphereCount] = pixels[i];
                     sphereCount++;
                 }
             }
         }
     }
 
-    Boolean IsEdgePixel(Color[] pixels, int i)
+    Boolean IsEdgePixel(Texture2D shape, Color[] pixels, int i)
     {
-        if ((i > 0 && pixels[i - 1].a == 0) || (i < shape.width - 1 && pixels[i + 1].a == 0) ||
+        // checks if pixel is solid & touching a transparent pixel
+        if ((i > 0 && pixels[i - 1].a == 0) || (i < pixels.Length - 1 && pixels[i + 1].a == 0) ||
                         (i / shape.width > 0 && pixels[i - shape.width].a == 0) ||
                         (i / shape.width < shape.height - 1 && pixels[i + shape.width].a == 0))
         {
