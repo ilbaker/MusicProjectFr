@@ -430,6 +430,7 @@ MonoBehaviour:
   z2: 100
   z3: 100
   z4: 100
+  parent: {fileID: 0}
 --- !u!1 &2065087974
 GameObject:
   m_ObjectHideFlags: 0
