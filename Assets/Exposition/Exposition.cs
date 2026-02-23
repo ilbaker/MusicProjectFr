@@ -1,22 +1,22 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Exposition : MonoBehaviour
 {
-    // Prefabs
-    public GameObject raindrop, reboundObj, impactObj, cloudObj;
-
-    // Object arrays
+    public GameObject raindrop, reboundObj, impactObj, cloudObj, parent;
+    Transform parentTransform;
+    
     GameObject[] spheres, cloud, reboundL, reboundR, impact;
     Material[] cloudMat;
     [Header("Piano trigger (onsets)")]
 public float pianoMinHz = 180f;
-public float pianoMaxHz = 2200f;    // piano fundamentals + lower harmonics
+public float pianoMaxHz = 2200f;
 
-public float hissMinHz = 6000f;     // rain hiss lives up here
+public float hissMinHz = 6000f;
 public float hissMaxHz = 14000f;
 
-public float onsetThreshold = 0.00006f;  // tune (see below)
-public float ratioThreshold = 1.6f;      // piano vs hiss gate
+public float onsetThreshold = 0.00006f;
+public float ratioThreshold = 1.6f;
 public float pianoCooldown = 0.12f;
 
 float prevPianoE = 0f;
@@ -48,6 +48,7 @@ float threshold = 0.0006f;
 
     void Start()
     {
+        parentTransform = parent.transform;
         fftSize = AudioSpectrum.FFTSIZE;
 
         // Nyquist is the maximum analyzable frequency in digital audio.
@@ -75,11 +76,10 @@ float threshold = 0.0006f;
         trackerReboundFall = new bool [numSphere];
         cloudMat = new Material[cloudBalls];
         
-
-        // Create cloud spheres
         for (int i = 0; i < cloudBalls; i++)
         {
             cloud[i] = Instantiate(cloudObj);
+            cloud[i].transform.SetParent(parentTransform);
             Renderer rend = cloud[i].GetComponent<Renderer>();
             Material mat = rend.material;
             mat.EnableKeyword("_EMISSION");
@@ -115,6 +115,7 @@ float threshold = 0.0006f;
             state[i] = false;
             trackerReboundFall[i] = false;
             spheres[i] = Instantiate(raindrop);
+            spheres[i].transform.SetParent(parentTransform);
             spheres[i].transform.position = new Vector3(
                 r * Random.Range(-1f, 1f),
                 17f,
@@ -124,6 +125,7 @@ float threshold = 0.0006f;
             startPos[i] = spheres[i].transform.position;
 
             reboundL[i] = Instantiate(reboundObj);
+            reboundL[i].transform.SetParent(parentTransform);
             reboundL[i].transform.position = new Vector3(
                 spheres[i].transform.position.x,
                 -3f,
@@ -132,6 +134,7 @@ float threshold = 0.0006f;
             reboundL[i].SetActive(false);
 
             reboundR[i] = Instantiate(reboundObj);
+            reboundR[i].transform.SetParent(parentTransform);
             reboundR[i].transform.position = new Vector3(
                 spheres[i].transform.position.x,
                 -3f,
@@ -140,6 +143,7 @@ float threshold = 0.0006f;
             reboundR[i].SetActive(false);
 
             impact[i] = Instantiate(impactObj);
+            impact[i].transform.SetParent(parentTransform);
             impact[i].transform.position = new Vector3(
                 spheres[i].transform.position.x,
                 -5f,
@@ -237,7 +241,7 @@ float cloudEnergy = BandEnergy(cloudMinHz, cloudMaxHz);
 cloudSmooth = Mathf.Lerp(cloudSmooth, cloudEnergy, Time.deltaTime * 8f);
 
 float emission = cloudSmooth * 100f;
-emission = Mathf.Clamp(emission, 0, 10);
+emission = Mathf.Clamp(emission, 0, 13f);
 
 for (int i = 0; i < cloudBalls; i++)
 {
