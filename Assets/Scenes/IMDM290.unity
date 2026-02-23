@@ -309,16 +309,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 600499337}
-  - component: {fileID: 600499336}
   - component: {fileID: 600499335}
   - component: {fileID: 600499334}
+  - component: {fileID: 600499338}
   m_Layer: 0
   m_Name: 04_AudioReactive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &600499334
 AudioSource:
   m_ObjectHideFlags: 0
@@ -428,18 +428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb45d316ff4bddc42b81a843d08cef36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSpectrum
---- !u!114 &600499336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600499333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09557d878fd4d0045b66a07f049a4315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioReactive
 --- !u!4 &600499337
 Transform:
   m_ObjectHideFlags: 0
@@ -455,6 +443,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 70.55, z: 0}
+--- !u!114 &600499338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600499333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 936a0d8e7dbe94cb7b5fd133915ed724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Exposition
+  raindrop: {fileID: 6252391404382329012, guid: 315455000b41c47e58b860c6a352b852, type: 3}
+  reboundObj: {fileID: 1952330788796777272, guid: 2d67f7ff528a647c88635dfcf78d3778, type: 3}
+  impactObj: {fileID: 2949466545768344117, guid: 8c5dfade30b07477cbb2eac77e93a70d, type: 3}
+  cloudObj: {fileID: 7719734382722912714, guid: 793d7a0ed46254f298f6fc062c663ba7, type: 3}
+  pianoMinHz: 180
+  pianoMaxHz: 2200
+  hissMinHz: 6000
+  hissMaxHz: 14000
+  onsetThreshold: 0.00006
+  ratioThreshold: 1.6
+  pianoCooldown: 0.12
+  cloudMinHz: 0
+  cloudMaxHz: 100
+  displayBins: 192
 --- !u!1 &642704525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1178655775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,7 +1056,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178655774}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd2e5f5fe9113794f818259faacb4f03, type: 3}
   m_Name: 
@@ -1091,7 +1105,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e9b76aca6077641938e3d8846513287a, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6927032fabbec5b4c8fb3b64188552f0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
