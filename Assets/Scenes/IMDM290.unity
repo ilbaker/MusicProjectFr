@@ -1222,6 +1222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2e5f5fe9113794f818259faacb4f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateShape
+  parent: {fileID: 0}
   shape1: {fileID: 2800000, guid: 8c87f823b14414b4c87198afa82abbda, type: 3}
   scale: 0.5
 --- !u!4 &1178655776
@@ -1731,6 +1732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2e5f5fe9113794f818259faacb4f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateShape
+  parent: {fileID: 0}
   shape1: {fileID: 0}
   scale: 0.5
 --- !u!4 &1264758015
@@ -2233,6 +2235,67 @@ MonoBehaviour:
   minLogHz: 20
   labelCount: 8
   labelYOffset: -0.45
+--- !u!1 &1465456573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1465456575}
+  - component: {fileID: 1465456574}
+  - component: {fileID: 1465456576}
+  m_Layer: 0
+  m_Name: Spin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1465456574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465456573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2e5f5fe9113794f818259faacb4f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreateShape
+  parent: {fileID: 1465456575}
+  shape1: {fileID: 2800000, guid: f0751e9e823212242ad6225c51a27527, type: 3}
+  scale: 1
+--- !u!4 &1465456575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465456573}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.32086, y: -13.44071, z: 74.62136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1465456576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465456573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c6968ebc9d5a848a6e361de34cedf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  rotateSpeed: 30
 --- !u!1 &1790023447
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,3 +2536,4 @@ SceneRoots:
   - {fileID: 720328525}
   - {fileID: 893588833}
   - {fileID: 1853399417}
+  - {fileID: 1465456575}

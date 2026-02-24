@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class ShapeToShape1 : MonoBehaviour
 {
     GameObject[] spheres;
+    Transform parent;
     public int numSphere = 500;
     float time = 0f;
     Vector3[] initPos;
@@ -44,10 +45,12 @@ public class ShapeToShape1 : MonoBehaviour
             // Draw primitive elements:
             // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/GameObject.CreatePrimitive.html
             spheres[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            spheres[i].transform.SetParent(parent);
 
             // Position
             initPos[i] = startPosition[i];
             spheres[i].transform.position = initPos[i];
+            
             spheres[i].transform.localRotation = Quaternion.EulerAngles(Random.Range(-180f, 180f), Random.Range(-180f, 180f), Random.Range(-180f, 180f));
             spheres[i].transform.localScale = new Vector3(Random.Range(0.3f, 0.5f), Random.Range(0.3f, 0.5f), Random.Range(0.3f, 0.5f));
             // Color

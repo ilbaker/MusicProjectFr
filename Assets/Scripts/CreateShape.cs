@@ -10,15 +10,16 @@ using UnityEngine;
 public class CreateShape : MonoBehaviour
 {
     GameObject[] spheres;
+    public Transform parent;
     Vector3[] spheresInitialPositions;
     Color[] sphereColors;
     public Texture2D shape1;
     public float scale = 0.5f;
-    int numSphere;
+    int numSphere = 300;
     // Start is called before the first frame update
     void Start()
     {
-        numSphere = NumSolidPixels(shape1);
+        //numSphere = NumSolidPixels(shape1);
 
         spheres = new GameObject[numSphere]; // how many spheres
         spheresInitialPositions = new Vector3[numSphere]; // initial positions of the spheres
@@ -33,6 +34,7 @@ public class CreateShape : MonoBehaviour
         
             // Initial positions on pixel grid
             spheres[i].transform.position = spheresInitialPositions[i];
+            spheres[i].transform.SetParent(parent);
 
             // Get the renderer of the spheres and assign colors.
             Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
@@ -65,24 +67,41 @@ public class CreateShape : MonoBehaviour
     void SetPositions(Texture2D shape, Vector3[] positions)
     {
         Color[] pixels = shape.GetPixels();
+        Vector3[] solidPositions = new Vector3[NumSolidPixels(shape)];
 
         int width = shape.width;
-        int sphereCount = 0;
+        int pixelCount = 0;
 
+        //Make array of every relevant pixel's position
         for (int i = 0; i < pixels.Length; i++)
         {
             if (pixels[i].a != 0)
             {
-                if (IsEdgePixel(shape, pixels, i) /*&& ((i % interval) == 0)*/ && sphereCount < numSphere)
+                if (IsEdgePixel(shape, pixels, i) && pixelCount < solidPositions.Length)
                 {
 
                     float x = (i % width) - (width / 2);
                     float y = (i / width) - (shape.height / 2);
-                    positions[sphereCount] = new Vector3(x * scale, y * scale, 100f);
+                    solidPositions[pixelCount] = new Vector3(x * scale, y * scale, 100);
                     //sphereColors[sphereCount] = pixels[i];
-                    sphereCount++;
+                    pixelCount++;
                 }
             }
+        }
+
+        for (int i = 0; i < numSphere; i++)
+        {
+            // formula for even gaps: (TOTAL * n) / intervals
+            int interval = (solidPositions.Length * i) / numSphere;
+            //Debug.Log(solidPositions.Length + " pixels, " + i + " spheres. interval = " + interval); 
+            //move to index after the gap
+            if (interval >= solidPositions.Length)
+            {
+                interval = solidPositions.Length - 1;
+            }
+
+            // add sphere position
+            positions[i] = solidPositions[interval];
         }
     }
 
