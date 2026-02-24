@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class ShapeToShape1 : MonoBehaviour
 {
     GameObject[] spheres;
-    Transform parent;
+    public Transform parent;
     public int numSphere = 500;
     float time = 0f;
     Vector3[] initPos;
