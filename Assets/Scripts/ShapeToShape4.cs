@@ -153,7 +153,7 @@ public class ShapeToShape4 : MonoBehaviour
             // Color Update over time
             Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
             float hue = (float)AudioSpectrum.audioAmp % 1; // Hue cycles through 0 to 1
-            Color color = Color.HSVToRGB(Mathf.Abs(hue * i/numSphere), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos((float)Math.PI * (time * 173f) / 60f * timeMod)); // Full saturation and brightness
+            Color color = Color.HSVToRGB(Mathf.Abs(hue * i/numSphere), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos((float)Math.PI * (time * 173f) / 480f)); // Full saturation and brightness
             sphereRenderer.material.color = color;
         }
     }
