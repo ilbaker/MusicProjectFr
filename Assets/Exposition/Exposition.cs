@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -8,7 +9,6 @@ public class Exposition : MonoBehaviour
     
     GameObject[] spheres, cloud, reboundL, reboundR, impact;
     Material[] cloudMat;
-    [Header("Piano trigger (onsets)")]
 public float pianoMinHz = 180f;
 public float pianoMaxHz = 2200f;
 
@@ -34,9 +34,7 @@ float lastPianoTime = -999f;
     int fftSize;
     float hzPerBin;
     float nyquist;
-    bool[] wasAbove, state, trackerReboundFall;
-float lastTime = -999f;
-float cooldown = 0.05f;
+    bool[] state, trackerReboundFall;
 float minHz = 400, maxHz = 2500;
 public float cloudMinHz = 0;
 public float cloudMaxHz = 100;
@@ -59,8 +57,6 @@ float threshold = 0.0006f;
         displayBins = Mathf.Clamp(displayBins, 16, fftSize);
         mappedBins = new int[displayBins];
         BuildLogMapping();
-
-        wasAbove = new bool[AudioSpectrum.FFTSIZE / 2];
 
         float r = 12f;
 
@@ -109,7 +105,6 @@ float threshold = 0.0006f;
             }
         }
 
-        // Create rain system
         for (int i = 0; i < numSphere; i++)
         {
             state[i] = false;
@@ -146,7 +141,7 @@ float threshold = 0.0006f;
             impact[i].transform.SetParent(parentTransform);
             impact[i].transform.position = new Vector3(
                 spheres[i].transform.position.x,
-                -5f,
+                -6f,
                 spheres[i].transform.position.z
             );
             impact[i].SetActive(false);
@@ -161,11 +156,9 @@ float threshold = 0.0006f;
 float pianoE = BandEnergy(pianoMinHz, pianoMaxHz);
 float hissE  = BandEnergy(hissMinHz, hissMaxHz);
 
-// onset = piano energy rising (note attack)
 float onset = pianoE - prevPianoE;
 prevPianoE = pianoE;
 
-// gate = piano must dominate rain hiss
 float ratio = pianoE / (hissE + 1e-6f);
 
 bool on = (onset > onsetThreshold) && (ratio > ratioThreshold);
@@ -227,6 +220,7 @@ wasOn = on;
 
                 reboundR[k].SetActive(false);
                 reboundL[k].SetActive(false);
+                impact[k].transform.localScale = Vector3.one * 0.1f;
                 impact[k].SetActive(false);
                 state[k] = false;
 
@@ -352,4 +346,14 @@ for (int i = 0; i < cloudBalls; i++)
 
     return sum / (maxBin - minBin);
 }
+
+public void DisableStuffThatShouldNotBeThere()
+    {
+        for(int i = 0; i < reboundR.Length; i++)
+        {
+            reboundR[i].SetActive(false);
+            reboundL[i].SetActive(false);
+            impact[i].SetActive(false);
+        }
+    }
 }

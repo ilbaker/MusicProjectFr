@@ -26,7 +26,8 @@ public class ShapeToShape4 : MonoBehaviour
     public Texture2D shape1, shape2, shape3, shape4;
     public float scale = 0.5f;
     public int z1, z2, z3, z4;
-    public float timeMod = 1 / 8;
+    public float bpm = 173f;
+    public float timeMod = 1;
 
     public Transform parent;
 
@@ -85,77 +86,90 @@ public class ShapeToShape4 : MonoBehaviour
         time += Time.deltaTime;
         //Debug.Log(AudioSpectrum.audioAmp);
         // what to update over time?
-        Vector3[] startPosition = position1, endPosition = position2;
+        // Vector3[] startPosition = position1, endPosition = position2;
 
         // Lerp : Linearly interpolates between two points.
         // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Vector3.Lerp.html
         // Vector3.Lerp(startPosition, endPosition, lerpFraction)
 
         // lerpFraction variable defines the point between startPosition and endPosition (0~1)
-        lerpFraction = (float)Math.Sin((float)Math.PI * (time * 173f)/60f * timeMod) * 0.5f + 0.5f;
+        float beatsPerSecond = bpm/60f;
+        lerpFraction = (float)Math.Sin((float)Math.PI * time * beatsPerSecond * timeMod) * 0.5f + 0.5f;
 
+        lerpFraction = Mathf.SmoothStep(0f, 1f, lerpFraction);
+
+for (int i = 0; i < numSphere; i++)
+{
+    spheres[i].transform.position = Vector3.Lerp(position1[i], position2[i], lerpFraction);
+
+    float s = 1f + Mathf.Sqrt(AudioSpectrum.audioAmp);
+    spheres[i].transform.localScale = new Vector3(s, s, 1f);
+    spheres[i].transform.Rotate(AudioSpectrum.audioAmp * 0.5f, 1f, 1f);
+
+    // (your color code can stay here)
+}
         //change lerp pattern
-        if (lerpFraction - lastLerp != 0)
-        {
-            //Debug.Log(lerpFraction + " - " + lastLerp + " = " + (lerpFraction - lastLerp));
-        }
+        // if (lerpFraction - lastLerp != 0)
+        // {
+        //     //Debug.Log(lerpFraction + " - " + lastLerp + " = " + (lerpFraction - lastLerp));
+        // }
 
         //if it's getting bigger
-        if (lerpFraction - lastLerp >= 0 && phase)
-        {
-            if (inflected)
-            {
-                phase = false;
-                inflected = false;
-            }
-            Debug.Log("phase1");
-            startPosition = position1;
-            endPosition = position2;
-        }
-        else if (lerpFraction - lastLerp < 0 && phase)
-        { //if it's getting smaller
-            startPosition = position2;
-            endPosition = position3;
-            inflected = true;
-            Debug.Log("phase2");
-        }
-        else if (lerpFraction - lastLerp >= 0 && !phase)
-        { //increasing second phase
-            if (inflected)
-            {
-                phase = !phase;
-                inflected = false;
-            }
-            Debug.Log("phase3");
-            startPosition = position3;
-            endPosition = position4;
-        }
-        else if (lerpFraction - lastLerp < 0 && !phase)
-        { // decreasing second phase
-            Debug.Log("phase4");
-            startPosition = position4;
-            endPosition = position1;
-            inflected = true;
-        } 
+        // if (lerpFraction - lastLerp >= 0 && phase)
+        // {
+        //     if (inflected)
+        //     {
+        //         phase = false;
+        //         inflected = false;
+        //     }
+        //     Debug.Log("phase1");
+        //     startPosition = position1;
+        //     endPosition = position2;
+        // }
+        // else if (lerpFraction - lastLerp < 0 && phase)
+        // { //if it's getting smaller
+        //     startPosition = position2;
+        //     endPosition = position3;
+        //     inflected = true;
+        //     Debug.Log("phase2");
+        // }
+        // else if (lerpFraction - lastLerp >= 0 && !phase)
+        // { //increasing second phase
+        //     if (inflected)
+        //     {
+        //         phase = !phase;
+        //         inflected = false;
+        //     }
+        //     Debug.Log("phase3");
+        //     startPosition = position3;
+        //     endPosition = position4;
+        // }
+        // else if (lerpFraction - lastLerp < 0 && !phase)
+        // { // decreasing second phase
+        //     Debug.Log("phase4");
+        //     startPosition = position4;
+        //     endPosition = position1;
+        //     inflected = true;
+        // } 
 
 
-        lastLerp = lerpFraction;
+        // lastLerp = lerpFraction;
 
-        for (int i = 0; i < numSphere; i++)
-        {
-           // Lerp logic. Update position       
-                t = i * 2 * Mathf.PI / numSphere;
-            spheres[i].transform.position = Vector3.Lerp(startPosition[i], endPosition[i], lerpFraction);
-            float scale = 1f + (float)Math.Sqrt(AudioSpectrum.audioAmp);
-            spheres[i].transform.localScale = new Vector3(scale, scale, 1);
-            spheres[i].transform.Rotate(AudioSpectrum.audioAmp * 0.5f, 1f, 1f);
+        // for (int i = 0; i < numSphere; i++)
+        // {
+        //    // Lerp logic. Update position       
+        //         t = i * 2 * Mathf.PI / numSphere;
+        //     spheres[i].transform.position = Vector3.Lerp(startPosition[i], endPosition[i], lerpFraction);
+        //     float scale = 1f + (float)Math.Sqrt(AudioSpectrum.audioAmp);
+        //     spheres[i].transform.localScale = new Vector3(scale, scale, 1);
+        //     spheres[i].transform.Rotate(AudioSpectrum.audioAmp * 0.5f, 1f, 1f);
 
-            // Color Update over time
-            Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
-            float hue = (float)AudioSpectrum.audioAmp % 1; // Hue cycles through 0 to 1
-            Color color = Color.HSVToRGB(Mathf.Abs(hue * i/numSphere), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos((float)Math.PI * (time * 173f) / 480f)); // Full saturation and brightness
-            sphereRenderer.material.color = color;
-        }
+        //     // Color Update over time
+        //     Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
+        //     float hue = (float)AudioSpectrum.audioAmp % 1; // Hue cycles through 0 to 1
+        //     Color color = Color.HSVToRGB(Mathf.Abs(hue * i/numSphere), Mathf.Cos(AudioSpectrum.audioAmp / 10f), 2f + Mathf.Cos((float)Math.PI * (time * 173f) / 480f)); // Full saturation and brightness
+        //     sphereRenderer.material.color = color;
+        // }
     }
 
     Vector3[] spheresCurrentPositions()

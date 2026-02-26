@@ -5,7 +5,7 @@ using UnityEngine;
 public class VideoController : MonoBehaviour
 {
     [SerializeField]
-    public GameObject rainfall, createShape1, spin, heartPulse, shape2, shape3, shape4;
+    public GameObject rainfall, createShape1, spin, heartPulse, shape2, shape3, shape4, rainfall2, rainfall3;
     float timer = 0f;
     void Start()
     {
@@ -14,32 +14,32 @@ public class VideoController : MonoBehaviour
         heartPulse.SetActive(false);
         shape2.SetActive(false);
         shape3.SetActive(false);
+        rainfall2.SetActive(false);
     }
 
     void Update()
     {
         timer += Time.deltaTime;
         Debug.Log(timer);
-        if (timer > 14.5f && timer < 25f)
+        if (timer > 14.5f && timer < 25.5f)
         {
             spin.SetActive(true);
         } 
-        else if(timer > 25f && timer < 36f)
+        else if(timer > 25.5f && timer < 36f)
         {
-            heartPulse.SetActive(true);
+            spin.SetActive(false);
             Disable(spin);
         }
-        if (timer > 36f && timer < 48f)
+        if (timer > 36.5f && timer < 48f)
         {
-            Disable(heartPulse);
             Disable(rainfall);
+            rainfall.SetActive(false);
             createShape1.SetActive(true);
-
         }
         else if (timer > 48f && timer < 58f)
         {
-            createShape1.GetComponent<ShapeToShape4>().timeMod = 0.5f;
             spin.SetActive(true);
+            Enable(spin);
         } else if (timer > 58f && timer < 70f)
         {
             Disable(createShape1);
@@ -48,13 +48,15 @@ public class VideoController : MonoBehaviour
         else if (timer > 70f && timer < 92f)
         {
             Disable(shape3);
-            shape2.SetActive(true);
-            Enable(shape2);
-            spin.SetActive(true);
-            Enable(spin);
+            shape3.SetActive(false);
+            rainfall2.SetActive(true);
+            spin.SetActive(false);
+            Disable(spin);
         }
         else if (timer > 92f && timer < 104f)
         {
+            Disable(rainfall2);
+            rainfall2.SetActive(false);
             heartPulse.SetActive(true);
             Enable(heartPulse);
             Disable(spin);
@@ -66,7 +68,7 @@ public class VideoController : MonoBehaviour
         } else if (timer > 124f)
         {
             shape2.transform.Translate(new Vector3(0, 0, 50));
-            rainfall.SetActive(true);
+            rainfall3.SetActive(true);
         }
     }
 
