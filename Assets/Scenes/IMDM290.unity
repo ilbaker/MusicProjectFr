@@ -129,13 +129,15 @@ GameObject:
   m_Component:
   - component: {fileID: 160949612}
   - component: {fileID: 160949613}
+  - component: {fileID: 160949614}
+  - component: {fileID: 160949615}
   m_Layer: 0
   m_Name: HeartPulse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &160949612
 Transform:
   m_ObjectHideFlags: 0
@@ -167,9 +169,37 @@ MonoBehaviour:
   numSphere: 250
   shape1: {fileID: 2800000, guid: 654554635f36e9c4b9d29d948466e057, type: 3}
   shape2: {fileID: 2800000, guid: 33a5b9086ec427742bbb95e8155422d7, type: 3}
-  scale: 0.25
+  scale: 0.84
   z1: 100
   z2: 100
+--- !u!114 &160949614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160949610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b9fc3ef6f1f4e41a8be21a8d683e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlowForShape
+  parentTransform: {fileID: 160949612}
+  glowSphere: {fileID: 4338879376158662765, guid: 6829805438d23437684e88517992715b, type: 3}
+--- !u!114 &160949615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160949610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55c784857f3740fb898d724288e70f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RigidBodyMotion
+  sphere: {fileID: 1571905797572255026, guid: 58f2dcf0c44fb4c008ff9821ce18e9c5, type: 3}
+  parent: {fileID: 160949612}
 --- !u!1 &368157090
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &368157091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &446441334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,7 +731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &563973256
 Transform:
   m_ObjectHideFlags: 0
@@ -1076,7 +1106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &720328525
 Transform:
   m_ObjectHideFlags: 0
@@ -1405,9 +1435,9 @@ MonoBehaviour:
   heartPulse: {fileID: 160949610}
   shape2: {fileID: 720328524}
   shape3: {fileID: 446441333}
-  shape4: {fileID: 0}
+  shape4: {fileID: 902599339}
   rainfall2: {fileID: 977767174}
-  rainfall3: {fileID: 0}
+  rainfall3: {fileID: 563973255}
 --- !u!4 &893588833
 Transform:
   m_ObjectHideFlags: 0
@@ -1423,6 +1453,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &902599339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902599341}
+  - component: {fileID: 902599342}
+  m_Layer: 0
+  m_Name: Shapes2 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &902599341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902599339}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902599342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902599339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489c03ffb12cc4fb6b89d1b5c36d57f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::flashing
+  numSphere: 500
+  shape1: {fileID: 2800000, guid: 4bce756aac51541b2a6cdfb3cdc91df5, type: 3}
+  shape2: {fileID: 2800000, guid: f0751e9e823212242ad6225c51a27527, type: 3}
+  shape3: {fileID: 2800000, guid: 654554635f36e9c4b9d29d948466e057, type: 3}
+  shape4: {fileID: 2800000, guid: 9449eecf714c26344becb676e6aa4b6f, type: 3}
+  scale: 0.5
+  z1: 100
+  z2: 100
+  z3: 100
+  z4: 100
+  bpm: 173
+  timeMod: 1
+  parent: {fileID: 902599341}
 --- !u!1 &977767174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &977767175
 Transform:
   m_ObjectHideFlags: 0
@@ -2882,7 +2969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1465456574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3172,3 +3259,4 @@ SceneRoots:
   - {fileID: 160949612}
   - {fileID: 368157092}
   - {fileID: 446441335}
+  - {fileID: 902599341}
