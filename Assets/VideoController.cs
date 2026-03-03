@@ -14,7 +14,9 @@ public class VideoController : MonoBehaviour
         heartPulse.SetActive(false);
         shape2.SetActive(false);
         shape3.SetActive(false);
+        shape4.SetActive(false);
         rainfall2.SetActive(false);
+        rainfall3.SetActive(false);
     }
 
     void Update()
@@ -45,7 +47,7 @@ public class VideoController : MonoBehaviour
             Disable(createShape1);
             shape3.SetActive(true);
         }
-        else if (timer > 70f && timer < 92f)
+        else if (timer > 70f && timer < 82f)
         {
             Disable(shape3);
             shape3.SetActive(false);
@@ -53,22 +55,25 @@ public class VideoController : MonoBehaviour
             spin.SetActive(false);
             Disable(spin);
         }
-        else if (timer > 92f && timer < 104f)
+        else if (timer > 82f && timer < 100f)
         {
             Disable(rainfall2);
             rainfall2.SetActive(false);
             heartPulse.SetActive(true);
-            Enable(heartPulse);
             Disable(spin);
-            shape2.GetComponentInChildren<ShapeToShape4>().timeMod = 1;
-        } else if (timer > 95f && timer < 99f)
+        } 
+        else if (timer > 100f && timer < 124f)
         {
-            Disable(shape2);
-            
-        } else if (timer > 124f)
+            spin.SetActive(true);
+            Enable(spin);
+        } 
+        else if (timer > 124f)
         {
-            shape2.transform.Translate(new Vector3(0, 0, 50));
             rainfall3.SetActive(true);
+            spin.SetActive(false);
+            Disable(spin);
+            heartPulse.SetActive(false);
+            Disable(heartPulse);
         }
     }
 
